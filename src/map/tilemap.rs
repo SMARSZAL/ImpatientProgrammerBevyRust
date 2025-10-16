@@ -40,7 +40,7 @@ pub const TILEMAP: TilemapDefinition = TilemapDefinition {
     atlas_width: 256,
     atlas_height: 320,
     sprites: &[
-          TilemapSprite {
+        TilemapSprite {
             name: "dirt",
             pixel_x: 128,
             pixel_y: 0,
@@ -345,5 +345,5 @@ pub const TILEMAP: TilemapDefinition = TilemapDefinition {
             pixel_x: 0,
             pixel_y: 192,
         },
-    ]
+    ],
 };

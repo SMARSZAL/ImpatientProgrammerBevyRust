@@ -1,6 +1,6 @@
 // src/map/models.rs
-use bevy_procedural_tilemaps::prelude::*;
 use crate::map::assets::SpawnableAsset;
+use bevy_procedural_tilemaps::prelude::*;
 
 /// Utility wrapper that ensures model declarations and their asset bindings stay aligned.
 pub struct TerrainModelBuilder {

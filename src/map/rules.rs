@@ -12,12 +12,12 @@ fn build_dirt_layer(
     terrain_model_builder
         .create_model(
             SocketsCartesian3D::Simple {
-                x_pos: terrain_sockets.dirt.material, // right
-                x_neg: terrain_sockets.dirt.material, // left
-                z_pos: terrain_sockets.dirt.layer_up, // top
+                x_pos: terrain_sockets.dirt.material,   // right
+                x_neg: terrain_sockets.dirt.material,   // left
+                z_pos: terrain_sockets.dirt.layer_up,   // top
                 z_neg: terrain_sockets.dirt.layer_down, // bottom
-                y_pos: terrain_sockets.dirt.material, // up
-                y_neg: terrain_sockets.dirt.material, // down
+                y_pos: terrain_sockets.dirt.material,   // up
+                y_neg: terrain_sockets.dirt.material,   // down
             },
             vec![SpawnableAsset::new("dirt")],
         )
@@ -657,8 +657,8 @@ pub fn build_world() -> (
         &mut socket_collection,
     );
 
-     // Build props layer
-     build_props_layer(
+    // Build props layer
+    build_props_layer(
         &mut terrain_model_builder,
         &terrain_sockets,
         &mut socket_collection,

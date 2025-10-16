@@ -1,6 +1,6 @@
 // src/map/generate.rs
-use bevy_procedural_tilemaps::prelude::*;
 use bevy::prelude::*;
+use bevy_procedural_tilemaps::prelude::*;
 
 use crate::map::{
     assets::{load_assets, prepare_tilemap_handles},
@@ -53,7 +53,7 @@ pub fn setup_generator(
         .with_rng(RngMode::RandomSeed)
         .with_node_heuristic(NodeSelectionHeuristic::MinimumRemainingValue)
         .with_model_heuristic(ModelSelectionHeuristic::WeightedProbability);
-    
+
     let generator = gen_builder.build().unwrap();
 
     // 4. Loading Assets - Load sprite atlas and convert to renderable assets

@@ -1,7 +1,6 @@
-use bevy::{prelude::*, sprite::Anchor};
-use bevy_procedural_tilemaps::prelude::*;
-use crate::map::tilemap::TILEMAP; // <--- line update alert
-
+use crate::map::tilemap::TILEMAP;
+use bevy::prelude::*;
+use bevy_procedural_tilemaps::prelude::*; // <--- line update alert
 
 #[derive(Clone)]
 pub struct SpawnableAsset {
