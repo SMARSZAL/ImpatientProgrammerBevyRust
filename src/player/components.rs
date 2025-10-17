@@ -7,7 +7,7 @@ pub(crate) const ANIM_DT: f32 = 0.1;
 pub(crate) const PLAYER_Z: f32 = 20.0;
 
 #[derive(Component)]
-pub(crate) struct Player;
+pub struct Player;
 
 #[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Facing {

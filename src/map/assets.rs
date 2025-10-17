@@ -1,4 +1,5 @@
 use crate::map::tilemap::TILEMAP;
+use crate::map::{TileType, TileTypeMarker};
 use bevy::prelude::*;
 use bevy_procedural_tilemaps::prelude::*; // <--- line update alert
 
@@ -12,6 +13,8 @@ pub struct SpawnableAsset {
     offset: Vec3,
     /// Function to add custom components (like collision, physics, etc.)
     components_spawner: fn(&mut EntityCommands),
+    /// The tile type for collision detection
+    tile_type: Option<TileType>,
 }
 
 impl SpawnableAsset {
@@ -21,11 +24,18 @@ impl SpawnableAsset {
             grid_offset: GridDelta::new(0, 0, 0),
             offset: Vec3::ZERO,
             components_spawner: |_| {}, // Default: no extra components
+            tile_type: None,  // Default to None
         }
     }
 
     pub fn with_grid_offset(mut self, offset: GridDelta) -> Self {
         self.grid_offset = offset;
+        self
+    }
+    
+    /// Builder method to set tile type for collision detection
+    pub fn with_tile_type(mut self, tile_type: TileType) -> Self {
+        self.tile_type = Some(tile_type);
         self
     }
 }
@@ -73,19 +83,89 @@ pub fn load_assets(
                 grid_offset,
                 offset,
                 components_spawner,
+                tile_type,
             } = asset_def;
 
             let Some(atlas_index) = TILEMAP.sprite_index(sprite_name) else {
                 panic!("Unknown atlas sprite '{}'", sprite_name);
             };
 
+            // Get the appropriate spawner based on tile type
+            let spawner: fn(&mut EntityCommands) = if let Some(tile_ty) = tile_type {
+                // Create a spawner function for this specific tile type
+                match tile_ty {
+                    TileType::Dirt => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Dirt,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Grass => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Grass,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::YellowGrass => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::YellowGrass,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Water => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Water,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Shore => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Shore,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Tree => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Tree,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Rock => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Rock,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Plant => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Plant,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Stump => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Stump,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                    TileType::Empty => |entity: &mut EntityCommands| {
+                        entity.insert(TileTypeMarker {
+                            tile_type: TileType::Empty,
+                            grid_position: IVec3::ZERO,
+                        });
+                    },
+                }
+            } else {
+                components_spawner
+            };
+            
             models_assets.add(
                 model_index,
                 ModelAsset {
                     assets_bundle: tilemap_handles.sprite(atlas_index),
                     grid_offset,
                     world_offset: offset,
-                    spawn_commands: components_spawner,
+                    spawn_commands: spawner,
                 },
             )
         }

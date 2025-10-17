@@ -8,7 +8,8 @@ use bevy::{
 
 use bevy_procedural_tilemaps::prelude::*;
 
-use crate::map::generate::{map_pixel_dimensions, setup_generator};
+use crate::map::generate::{map_pixel_dimensions, setup_generator, build_collision_map, CollisionMapBuilt};
+use crate::map::debug::{DebugCollisionEnabled, toggle_debug_collision, debug_draw_collision, debug_player_position, debug_log_tile_info};
 use crate::player::PlayerPlugin;
 
 fn main() {
@@ -33,7 +34,16 @@ fn main() {
                 .set(ImagePlugin::default_nearest()),
         )
         .add_plugins(ProcGenSimplePlugin::<Cartesian3D, Sprite>::default())
+        .init_resource::<CollisionMapBuilt>()
+        .init_resource::<DebugCollisionEnabled>()
         .add_systems(Startup, (setup_camera, setup_generator))
+        .add_systems(Update, (
+            build_collision_map,
+            toggle_debug_collision,
+            debug_draw_collision,
+            debug_player_position,
+            debug_log_tile_info,
+        ))
         .add_plugins(PlayerPlugin)
         .run();
 }

@@ -4,6 +4,7 @@ use super::components::{
     ANIM_DT, AnimationState, AnimationTimer, DirectionalClips, Facing, MOVE_SPEED, PLAYER_Z,
     Player, TILE_SIZE, WALK_FRAMES,
 };
+use crate::map::Map;
 
 fn spawn_player(
     mut commands: Commands,
@@ -46,6 +47,7 @@ fn spawn_player(
 fn move_player(
     input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
+    map: Option<Res<Map>>,
     mut player: Query<(&mut Transform, &mut AnimationState), With<Player>>,
 ) {
     let Ok((mut transform, mut anim)) = player.single_mut() else {
@@ -67,23 +69,48 @@ fn move_player(
     }
 
     if direction != Vec2::ZERO {
+        // Calculate the proposed new position
         let delta = direction.normalize() * MOVE_SPEED * time.delta_secs();
-        transform.translation.x += delta.x;
-        transform.translation.y += delta.y;
-        anim.moving = true;
-
-        if direction.x.abs() > direction.y.abs() {
-            anim.facing = if direction.x > 0.0 {
-                Facing::Right
-            } else {
-                Facing::Left
-            };
+        let current_pos = Vec2::new(transform.translation.x, transform.translation.y);
+        let new_pos = current_pos + delta;
+        
+        // Use robust circle-based collision with swept movement
+        // Player collider radius = 12 pixels (3/8 of 32px tile) - increased for safety
+        let collider_radius = 12.0;
+        
+        let new_pos = if let Some(map) = map.as_ref() {
+            // Use swept movement to prevent tunneling and ensure smooth collision
+            map.try_move_circle(current_pos, new_pos, collider_radius)
         } else {
-            anim.facing = if direction.y > 0.0 {
-                Facing::Up
+            new_pos
+        };
+        
+        // Only move if position changed (collision prevented perfect movement)
+        let can_move = new_pos != current_pos;
+        
+        // Only move if the destination is walkable
+        if can_move {
+            transform.translation.x = new_pos.x;
+            transform.translation.y = new_pos.y;
+            anim.moving = true;
+
+            // Update facing direction
+            if direction.x.abs() > direction.y.abs() {
+                anim.facing = if direction.x > 0.0 {
+                    Facing::Right
+                } else {
+                    Facing::Left
+                };
             } else {
-                Facing::Down
-            };
+                anim.facing = if direction.y > 0.0 {
+                    Facing::Up
+                } else {
+                    Facing::Down
+                };
+            }
+        } else {
+            // Blocked by unwalkable tile - stop moving
+            anim.moving = false;
         }
     } else {
         anim.moving = false;
