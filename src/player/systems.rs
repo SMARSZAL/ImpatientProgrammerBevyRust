@@ -4,7 +4,7 @@ use super::components::{
     ANIM_DT, AnimationState, AnimationTimer, DirectionalClips, Facing, MOVE_SPEED, PLAYER_Z,
     Player, TILE_SIZE, WALK_FRAMES,
 };
-use crate::map::Map;
+use crate::collision::CollisionMap;
 
 fn spawn_player(
     mut commands: Commands,
@@ -47,7 +47,7 @@ fn spawn_player(
 fn move_player(
     input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
-    map: Option<Res<Map>>,
+    map: Option<Res<CollisionMap>>,
     mut player: Query<(&mut Transform, &mut AnimationState), With<Player>>,
 ) {
     let Ok((mut transform, mut anim)) = player.single_mut() else {

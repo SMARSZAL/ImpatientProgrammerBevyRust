@@ -2,7 +2,7 @@
 use crate::map::assets::SpawnableAsset;
 use crate::map::models::TerrainModelBuilder;
 use crate::map::sockets::*;
-use crate::map::TileType;
+use crate::collision::TileType;
 use bevy_procedural_tilemaps::prelude::*;
 
 fn build_dirt_layer(

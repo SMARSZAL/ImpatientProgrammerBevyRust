@@ -6,8 +6,8 @@ use std::collections::HashMap;
 use crate::map::{
     assets::{load_assets, prepare_tilemap_handles},
     rules::build_world,
-    Map, TileType, TileTypeMarker,
 };
+use crate::collision::{TileType, TileMarker, CollisionMap};
 
 // -----------------  Configurable values ---------------------------
 /// Modify these values to control the map size.
@@ -26,10 +26,6 @@ const NODE_SIZE: Vec3 = Vec3::new(TILE_SIZE, TILE_SIZE, 1.);
 const ASSETS_SCALE: Vec3 = Vec3::new(2.0, 2.0, 1.0);
 /// Number of z layers in the map, derived from the default terrain layers.
 const GRID_Z: u32 = 5;
-
-pub fn map_pixel_dimensions() -> Vec2 {
-    Vec2::new(TILE_SIZE * GRID_X as f32, TILE_SIZE * GRID_Y as f32)
-}
 
 pub fn setup_generator(
     mut commands: Commands,
@@ -91,7 +87,7 @@ pub struct CollisionMapBuilt(pub bool);
 pub fn build_collision_map(
     mut commands: Commands,
     mut built: ResMut<CollisionMapBuilt>,
-    tile_query: Query<(&TileTypeMarker, &Transform)>,
+    tile_query: Query<(&TileMarker, &Transform)>,
 ) {
     // Skip if already built
     if built.0 {
@@ -113,7 +109,7 @@ pub fn build_collision_map(
     let grid_origin_x = -TILE_SIZE * GRID_X as f32 / 2.0;
     let grid_origin_y = -TILE_SIZE * GRID_Y as f32 / 2.0;
     
-    for (marker, transform) in tile_query.iter() {
+    for (_marker, transform) in tile_query.iter() {
         let world_x = transform.translation.x;
         let world_y = transform.translation.y;
         let grid_x = ((world_x - grid_origin_x) / TILE_SIZE).floor() as i32;
@@ -142,7 +138,7 @@ pub fn build_collision_map(
     let actual_height = (max_y - min_y + 1) as i32;
     
     // Use the SAME grid_origin from bounds detection to ensure consistency
-    let mut map = Map::with_origin(actual_width, actual_height, TILE_SIZE, grid_origin_x, grid_origin_y);
+    let mut map = CollisionMap::with_origin(actual_width, actual_height, TILE_SIZE, grid_origin_x, grid_origin_y);
     
     info!("🎯 Created collision map: {}x{} at origin ({:.1}, {:.1})",
           actual_width, actual_height, grid_origin_x, grid_origin_y);
@@ -228,7 +224,7 @@ pub fn build_collision_map(
 
 /// Debug helper to dump collision map to a text file
 fn dump_collision_map_to_file(
-    map: &Map, 
+    map: &CollisionMap, 
     layer_tracker: &HashMap<(i32, i32), (TileType, f32)>,
     min_x: i32,
     min_y: i32,
@@ -303,7 +299,7 @@ fn dump_collision_map_to_file(
 
 /// Convert water edges adjacent to walkable tiles into shore tiles
 /// This makes water edges traversable, creating a natural beach/shoreline
-fn convert_water_edges_to_shore(map: &mut Map) {
+fn convert_water_edges_to_shore(map: &mut CollisionMap) {
     let mut shores_to_create = Vec::new();
     
     // Find all water tiles that touch walkable tiles

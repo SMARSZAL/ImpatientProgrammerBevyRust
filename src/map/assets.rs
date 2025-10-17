@@ -1,7 +1,7 @@
 use crate::map::tilemap::TILEMAP;
-use crate::map::{TileType, TileTypeMarker};
+use crate::collision::{TileType, TileMarker};
 use bevy::prelude::*;
-use bevy_procedural_tilemaps::prelude::*; // <--- line update alert
+use bevy_procedural_tilemaps::prelude::*;
 
 #[derive(Clone)]
 pub struct SpawnableAsset {
@@ -95,64 +95,28 @@ pub fn load_assets(
                 // Create a spawner function for this specific tile type
                 match tile_ty {
                     TileType::Dirt => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Dirt,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::Dirt });
                     },
                     TileType::Grass => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Grass,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::Grass });
                     },
                     TileType::YellowGrass => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::YellowGrass,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::YellowGrass });
                     },
                     TileType::Water => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Water,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::Water });
                     },
                     TileType::Shore => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Shore,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::Shore });
                     },
                     TileType::Tree => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Tree,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::Tree });
                     },
                     TileType::Rock => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Rock,
-                            grid_position: IVec3::ZERO,
-                        });
-                    },
-                    TileType::Plant => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Plant,
-                            grid_position: IVec3::ZERO,
-                        });
-                    },
-                    TileType::Stump => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Stump,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::Rock });
                     },
                     TileType::Empty => |entity: &mut EntityCommands| {
-                        entity.insert(TileTypeMarker {
-                            tile_type: TileType::Empty,
-                            grid_position: IVec3::ZERO,
-                        });
+                        entity.insert(TileMarker { tile_type: TileType::Empty });
                     },
                 }
             } else {
