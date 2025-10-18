@@ -5,6 +5,7 @@ use super::components::{
     Player, TILE_SIZE, WALK_FRAMES,
 };
 use crate::collision::CollisionMap;
+use crate::inventory::{Inventory, Pickable};
 
 /// Resource to track if player has been spawned
 #[derive(Resource, Default)]
@@ -22,7 +23,7 @@ fn spawn_player(
     if player_spawned.0 || !player_query.is_empty() {
         return;
     }
-    
+
     // Only spawn if collision map is ready
     if map.is_none() {
         return;
@@ -66,16 +67,19 @@ fn spawn_player(
         },
         AnimationTimer(Timer::from_seconds(ANIM_DT, TimerMode::Repeating)),
     ));
-    
+
     // Mark as spawned
     player_spawned.0 = true;
-    info!("🎮 Player spawned at walkable position: ({:.1}, {:.1})", spawn_pos.x, spawn_pos.y);
+    info!(
+        "🎮 Player spawned at walkable position: ({:.1}, {:.1})",
+        spawn_pos.x, spawn_pos.y
+    );
 }
 
 /// Find a walkable spawn position on the map
 fn find_walkable_spawn_position(map: &CollisionMap) -> Vec3 {
     use rand::Rng;
-    
+
     // FEET-BASED SPAWN: Ensure player's feet are on a walkable tile
     // Player scale is 1.2, so sprite height is TILE_SIZE * 1.2 = 76.8
     // Feet are at: center_y - (sprite_height / 2) = center_y - 38.4
@@ -83,21 +87,21 @@ fn find_walkable_spawn_position(map: &CollisionMap) -> Vec3 {
     const PLAYER_SPRITE_HEIGHT: f32 = TILE_SIZE as f32 * PLAYER_SCALE; // 76.8
     let feet_offset = PLAYER_SPRITE_HEIGHT / 2.0; // 38.4
     let collider_radius = 16.0; // Same as movement collision
-    
+
     // Try to find a walkable position, starting from center and spiraling outward
     let center_x = map.width / 2;
     let center_y = map.height / 2;
-    
+
     // Convert grid center to world position (this will be the CENTER of the player)
     let world_center_x = map.grid_origin_x + (center_x as f32 + 0.5) * map.tile_size;
     let world_center_y = map.grid_origin_y + (center_y as f32 + 0.5) * map.tile_size;
-    
+
     // Check center first - ensure feet position is walkable
     let center_feet = Vec2::new(world_center_x, world_center_y - feet_offset);
     if map.is_world_pos_clear_circle(center_feet, collider_radius) {
         return Vec3::new(world_center_x, world_center_y, PLAYER_Z);
     }
-    
+
     // Spiral outward from center
     for radius in 1..=std::cmp::min(map.width, map.height) / 2 {
         for dx in -radius..=radius {
@@ -106,15 +110,15 @@ fn find_walkable_spawn_position(map: &CollisionMap) -> Vec3 {
                 if dx.abs() != radius && dy.abs() != radius {
                     continue;
                 }
-                
+
                 let x = center_x + dx;
                 let y = center_y + dy;
-                
+
                 if map.in_bounds(x, y) {
                     let world_x = map.grid_origin_x + (x as f32 + 0.5) * map.tile_size;
                     let world_y = map.grid_origin_y + (y as f32 + 0.5) * map.tile_size;
                     let feet_pos = Vec2::new(world_x, world_y - feet_offset);
-                    
+
                     if map.is_world_pos_clear_circle(feet_pos, collider_radius) {
                         return Vec3::new(world_x, world_y, PLAYER_Z);
                     }
@@ -122,22 +126,23 @@ fn find_walkable_spawn_position(map: &CollisionMap) -> Vec3 {
             }
         }
     }
-    
+
     // Fallback: random walkable position
     let mut rng = rand::thread_rng();
-    for _ in 0..100 { // Try up to 100 random positions
+    for _ in 0..100 {
+        // Try up to 100 random positions
         let x = rng.gen_range(0..map.width);
         let y = rng.gen_range(0..map.height);
-        
+
         let world_x = map.grid_origin_x + (x as f32 + 0.5) * map.tile_size;
         let world_y = map.grid_origin_y + (y as f32 + 0.5) * map.tile_size;
         let feet_pos = Vec2::new(world_x, world_y - feet_offset);
-        
+
         if map.is_world_pos_clear_circle(feet_pos, collider_radius) {
             return Vec3::new(world_x, world_y, PLAYER_Z);
         }
     }
-    
+
     // Ultimate fallback: center of map
     warn!("Could not find walkable spawn position, using center");
     Vec3::new(world_center_x, world_center_y, PLAYER_Z)
@@ -172,7 +177,7 @@ fn move_player(
         let delta = direction.normalize() * MOVE_SPEED * time.delta_secs();
         let current_center = Vec2::new(transform.translation.x, transform.translation.y);
         let new_center = current_center + delta;
-        
+
         // FEET-BASED COLLISION: Use player's feet position for collision detection
         // This makes movement feel more natural - player can get closer to obstacles
         // Player scale is 1.2, so sprite height is TILE_SIZE * 1.2 = 76.8
@@ -180,27 +185,27 @@ fn move_player(
         const PLAYER_SCALE: f32 = 1.2;
         const PLAYER_SPRITE_HEIGHT: f32 = TILE_SIZE as f32 * PLAYER_SCALE; // 76.8
         let feet_offset = PLAYER_SPRITE_HEIGHT / 2.0; // 38.4
-        
+
         let current_feet = Vec2::new(current_center.x, current_center.y - feet_offset);
         let new_feet = Vec2::new(new_center.x, new_center.y - feet_offset);
-        
+
         // Use robust circle-based collision with swept movement
         // Player collider radius = 16 pixels (reduced for more natural movement with leeway)
         let collider_radius = 16.0;
-        
+
         let new_feet = if let Some(map) = map.as_ref() {
             // Use swept movement to prevent tunneling and ensure smooth collision
             map.try_move_circle(current_feet, new_feet, collider_radius)
         } else {
             new_feet
         };
-        
+
         // Convert feet position back to center position
         let new_center = Vec2::new(new_feet.x, new_feet.y + feet_offset);
-        
+
         // Only move if position changed (collision prevented perfect movement)
         let can_move = new_center != current_center;
-        
+
         // Only move if the destination is walkable
         if can_move {
             transform.translation.x = new_center.x;
@@ -227,6 +232,42 @@ fn move_player(
         }
     } else {
         anim.moving = false;
+    }
+}
+
+fn handle_pickups(
+    mut commands: Commands,
+    mut inventory: ResMut<Inventory>,
+    player_query: Query<&Transform, With<Player>>,
+    pickables: Query<(Entity, &GlobalTransform, &Pickable)>,
+) {
+    let Some(player_transform) = player_query.iter().next() else {
+        return;
+    };
+
+    let player_pos = player_transform.translation.truncate();
+    let mut collected = Vec::new();
+
+    for (entity, global_transform, pickable) in pickables.iter() {
+        let item_pos = global_transform.translation().truncate();
+        let distance_sq = player_pos.distance_squared(item_pos);
+        if distance_sq <= pickable.radius * pickable.radius {
+            collected.push((entity, pickable.kind));
+        }
+    }
+
+    if collected.is_empty() {
+        return;
+    }
+
+    for (entity, kind) in collected {
+        commands.entity(entity).despawn();
+        let count = inventory.add(kind);
+        let summary = inventory.summary();
+        info!(
+            "Picked up {} (total: {}) — inventory: {}",
+            kind, count, summary
+        );
     }
 }
 
@@ -282,7 +323,9 @@ pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<PlayerSpawned>()
-            .add_systems(Update, (spawn_player, move_player, animate_player));
+        app.init_resource::<PlayerSpawned>().add_systems(
+            Update,
+            (spawn_player, move_player, handle_pickups, animate_player),
+        );
     }
 }

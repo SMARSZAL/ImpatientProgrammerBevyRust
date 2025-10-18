@@ -1,5 +1,6 @@
+use crate::collision::{TileMarker, TileType};
+use crate::inventory::{ItemKind, Pickable};
 use crate::map::tilemap::TILEMAP;
-use crate::collision::{TileType, TileMarker};
 use bevy::prelude::*;
 use bevy_procedural_tilemaps::prelude::*;
 
@@ -24,7 +25,7 @@ impl SpawnableAsset {
             grid_offset: GridDelta::new(0, 0, 0),
             offset: Vec3::ZERO,
             components_spawner: |_| {}, // Default: no extra components
-            tile_type: None,  // Default to None
+            tile_type: None,            // Default to None
         }
     }
 
@@ -32,12 +33,51 @@ impl SpawnableAsset {
         self.grid_offset = offset;
         self
     }
-    
+
     /// Builder method to set tile type for collision detection
     pub fn with_tile_type(mut self, tile_type: TileType) -> Self {
         self.tile_type = Some(tile_type);
         self
     }
+
+    pub fn with_components_spawner(mut self, spawner: fn(&mut EntityCommands)) -> Self {
+        self.components_spawner = spawner;
+        self
+    }
+
+    pub fn with_pickable(self, kind: ItemKind) -> Self {
+        match kind {
+            ItemKind::TreeStump2 => self.with_components_spawner(add_tree_stump_2_pickup),
+            ItemKind::Plant1 => self.with_components_spawner(add_plant_1_pickup),
+            ItemKind::Plant2 => self.with_components_spawner(add_plant_2_pickup),
+            ItemKind::Plant3 => self.with_components_spawner(add_plant_3_pickup),
+            ItemKind::Plant4 => self.with_components_spawner(add_plant_4_pickup),
+        }
+    }
+}
+
+fn add_pickable(entity: &mut EntityCommands, kind: ItemKind) {
+    entity.insert(Pickable::new(kind));
+}
+
+fn add_tree_stump_2_pickup(entity: &mut EntityCommands) {
+    add_pickable(entity, ItemKind::TreeStump2);
+}
+
+fn add_plant_1_pickup(entity: &mut EntityCommands) {
+    add_pickable(entity, ItemKind::Plant1);
+}
+
+fn add_plant_2_pickup(entity: &mut EntityCommands) {
+    add_pickable(entity, ItemKind::Plant2);
+}
+
+fn add_plant_3_pickup(entity: &mut EntityCommands) {
+    add_pickable(entity, ItemKind::Plant3);
+}
+
+fn add_plant_4_pickup(entity: &mut EntityCommands) {
+    add_pickable(entity, ItemKind::Plant4);
 }
 
 #[derive(Clone)]
@@ -95,34 +135,50 @@ pub fn load_assets(
                 // Create a spawner function for this specific tile type
                 match tile_ty {
                     TileType::Dirt => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::Dirt });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::Dirt,
+                        });
                     },
                     TileType::Grass => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::Grass });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::Grass,
+                        });
                     },
                     TileType::YellowGrass => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::YellowGrass });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::YellowGrass,
+                        });
                     },
                     TileType::Water => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::Water });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::Water,
+                        });
                     },
                     TileType::Shore => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::Shore });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::Shore,
+                        });
                     },
                     TileType::Tree => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::Tree });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::Tree,
+                        });
                     },
                     TileType::Rock => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::Rock });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::Rock,
+                        });
                     },
                     TileType::Empty => |entity: &mut EntityCommands| {
-                        entity.insert(TileMarker { tile_type: TileType::Empty });
+                        entity.insert(TileMarker {
+                            tile_type: TileType::Empty,
+                        });
                     },
                 }
             } else {
                 components_spawner
             };
-            
+
             models_assets.add(
                 model_index,
                 ModelAsset {

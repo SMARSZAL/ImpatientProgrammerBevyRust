@@ -46,7 +46,7 @@ pub fn setup_fog_of_war(
         player_pos: Vec2::ZERO,
         vision_radius: vision_radius.0,
     });
-    
+
     commands.spawn((
         Mesh2d(mesh),
         MeshMaterial2d(material),
@@ -56,11 +56,14 @@ pub fn setup_fog_of_war(
 }
 
 /// System to make the fog follow the player
-/// 
+///
 /// OPTIMIZATION: Only updates when player moves significantly (more than 1 pixel)
 pub fn follow_fog(
     player_query: Query<&Transform, (With<crate::player::Player>, Changed<Transform>)>,
-    mut fog_query: Query<(&mut Transform, &MeshMaterial2d<CircularFogMaterial>), (With<FogOfWar>, Without<crate::player::Player>)>,
+    mut fog_query: Query<
+        (&mut Transform, &MeshMaterial2d<CircularFogMaterial>),
+        (With<FogOfWar>, Without<crate::player::Player>),
+    >,
     mut materials: ResMut<Assets<CircularFogMaterial>>,
 ) {
     let Ok(player_transform) = player_query.single() else {
@@ -71,7 +74,10 @@ pub fn follow_fog(
         return;
     };
 
-    let player_pos = Vec2::new(player_transform.translation.x, player_transform.translation.y);
+    let player_pos = Vec2::new(
+        player_transform.translation.x,
+        player_transform.translation.y,
+    );
 
     // Update fog overlay position to follow player
     fog_transform.translation.x = player_pos.x;

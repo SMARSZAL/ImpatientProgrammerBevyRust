@@ -14,9 +14,9 @@ pub enum TileType {
     Dirt,
     Grass,
     YellowGrass,
-    Shore,      // Water edges
-    Empty,      // No tile
-    
+    Shore, // Water edges
+    Empty, // No tile
+
     // Non-walkable obstacles
     Water,
     Tree,
