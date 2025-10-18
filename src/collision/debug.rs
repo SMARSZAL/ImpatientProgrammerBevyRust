@@ -3,10 +3,14 @@ use bevy::prelude::*;
 use super::CollisionMap;
 
 /// Resource to track if debug visualization is enabled
+/// Only available in debug builds
+#[cfg(debug_assertions)]
 #[derive(Resource, Default)]
 pub struct DebugCollisionEnabled(pub bool);
 
 /// Toggle debug collision visualization with F3 key
+/// Only available in debug builds
+#[cfg(debug_assertions)]
 pub fn toggle_debug_collision(
     keyboard: Res<ButtonInput<KeyCode>>,
     mut debug_enabled: ResMut<DebugCollisionEnabled>,
@@ -23,6 +27,8 @@ pub fn toggle_debug_collision(
 
 /// Draw colored rectangles over tiles to show walkability
 /// Green = walkable, Red = unwalkable
+/// Only available in debug builds
+#[cfg(debug_assertions)]
 pub fn debug_draw_collision(
     map: Option<Res<CollisionMap>>,
     debug_enabled: Res<DebugCollisionEnabled>,
@@ -68,6 +74,8 @@ pub fn debug_draw_collision(
 }
 
 /// Draw a legend showing what the colors mean
+/// Only available in debug builds
+#[cfg(debug_assertions)]
 fn draw_legend(gizmos: &mut Gizmos, map: &CollisionMap) {
     let legend_x = map.grid_origin_x + 40.0;
     let legend_y = map.grid_origin_y + (map.height as f32 * map.tile_size) - 40.0;
@@ -88,6 +96,8 @@ fn draw_legend(gizmos: &mut Gizmos, map: &CollisionMap) {
 }
 
 /// Draw player position indicator
+/// Only available in debug builds
+#[cfg(debug_assertions)]
 pub fn debug_player_position(
     player: Query<&Transform, With<crate::player::Player>>,
     map: Option<Res<CollisionMap>>,
@@ -154,6 +164,8 @@ pub fn debug_player_position(
 }
 
 /// Print tile info to console when player moves
+/// Only available in debug builds
+#[cfg(debug_assertions)]
 pub fn debug_log_tile_info(
     player: Query<&Transform, (With<crate::player::Player>, Changed<Transform>)>,
     map: Option<Res<CollisionMap>>,
