@@ -212,8 +212,6 @@ pub fn build_collision_map(
     info!("Collision map built! Walkable: {}, Unwalkable: {}", 
           walkable, unwalkable);
     
-    // DEBUG: Dump the collision map to a file for inspection
-    dump_collision_map_to_file(&map, &layer_tracker, min_x, min_y);
     
     // Insert the map as a resource
     commands.insert_resource(map);
@@ -222,80 +220,6 @@ pub fn build_collision_map(
     built.0 = true;
 }
 
-/// Debug helper to dump collision map to a text file
-fn dump_collision_map_to_file(
-    map: &CollisionMap, 
-    layer_tracker: &HashMap<(i32, i32), (TileType, f32)>,
-    min_x: i32,
-    min_y: i32,
-) {
-    use std::fs::File;
-    use std::io::Write;
-    
-    let mut file = File::create("collision_map_debug.txt").unwrap();
-    
-    writeln!(file, "=== COLLISION MAP DEBUG ===").unwrap();
-    writeln!(file, "Map dimensions: {}x{}", map.width, map.height).unwrap();
-    writeln!(file, "Tile size: {}", map.tile_size).unwrap();
-    writeln!(file, "Grid origin: ({:.1}, {:.1})", map.grid_origin_x, map.grid_origin_y).unwrap();
-    writeln!(file, "Min coords offset: ({}, {})", min_x, min_y).unwrap();
-    writeln!(file, "").unwrap();
-    
-    writeln!(file, "=== LAYER TRACKER (World Grid Coords) ===").unwrap();
-    let mut sorted_tracker: Vec<_> = layer_tracker.iter().collect();
-    sorted_tracker.sort_by_key(|((x, y), _)| (y, x));
-    
-    for ((world_x, world_y), (tile_type, z)) in sorted_tracker.iter().take(50) {
-        let local_x = world_x - min_x;
-        let local_y = world_y - min_y;
-        writeln!(file, "World grid ({:3}, {:3}) → Local [{:3}, {:3}] = {:?} (z={:.1})",
-                 world_x, world_y, local_x, local_y, tile_type, z).unwrap();
-    }
-    writeln!(file, "... ({} total entries)", layer_tracker.len()).unwrap();
-    writeln!(file, "").unwrap();
-    
-    writeln!(file, "=== COLLISION MAP GRID (Local Coords) ===").unwrap();
-    writeln!(file, "Legend: . = walkable, # = unwalkable, ? = empty").unwrap();
-    writeln!(file, "").unwrap();
-    
-    // Print column headers
-    write!(file, "     ").unwrap();
-    for x in 0..map.width.min(50) {
-        write!(file, "{}", x % 10).unwrap();
-    }
-    writeln!(file, "").unwrap();
-    
-    // Print rows
-    for y in (0..map.height).rev() {
-        write!(file, "{:3}: ", y).unwrap();
-        for x in 0..map.width.min(50) {
-            let idx = map.xy_idx(x, y);
-            let tile = &map.tiles[idx];
-            let ch = match tile {
-                TileType::Empty => '?',
-                _ if tile.is_walkable() => '.',
-                _ => '#',
-            };
-            write!(file, "{}", ch).unwrap();
-        }
-        writeln!(file, "").unwrap();
-    }
-    
-    writeln!(file, "").unwrap();
-    writeln!(file, "=== TILE TYPE DETAILS ===").unwrap();
-    for y in (0..map.height).rev().take(20) {
-        for x in 0..map.width.min(20) {
-            let idx = map.xy_idx(x, y);
-            let tile = &map.tiles[idx];
-            if *tile != TileType::Empty {
-                writeln!(file, "[{:2}, {:2}] = {:?} (walkable: {})",
-                         x, y, tile, tile.is_walkable()).unwrap();
-            }
-        }
-    }
-    
-    info!("📝 Collision map dumped to collision_map_debug.txt");
-}
 
 /// Convert water edges adjacent to walkable tiles into shore tiles
 /// This makes water edges traversable, creating a natural beach/shoreline
