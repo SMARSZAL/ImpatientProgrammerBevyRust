@@ -1,0 +1,91 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
+     Running `target/debug/chapter2`
+[2m2025-10-18T04:31:32.980335Z[0m [32m INFO[0m [2mbevy_diagnostic::system_information_diagnostics_plugin::internal[0m[2m:[0m SystemInfo { os: "macOS 15.5 Sequoia", kernel: "24.5.0", cpu: "Apple M3", core_count: "8", memory: "24.0 GiB" }
+[2m2025-10-18T04:31:33.068581Z[0m [32m INFO[0m [2mbevy_render::renderer[0m[2m:[0m AdapterInfo { name: "Apple M3", vendor: 0, device: 0, device_type: IntegratedGpu, driver: "", driver_info: "", backend: Metal }
+[2m2025-10-18T04:31:33.442052Z[0m [32m INFO[0m [2mbevy_render::batching::gpu_preprocessing[0m[2m:[0m GPU preprocessing is fully supported on this device.
+[2m2025-10-18T04:31:33.490290Z[0m [32m INFO[0m [2mbevy_winit::system[0m[2m:[0m Creating new window Bevy Game (0v0)
+[2m2025-10-18T04:31:33.490437Z[0m [33m WARN[0m [2mbevy_winit::winit_windows[0m[2m:[0m Can't select current monitor on window creation or cannot find current monitor!
+[2m2025-10-18T04:31:35.418835Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m Building collision map from 949 tiles...
+[2m2025-10-18T04:31:35.419020Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 🗺️  ACTUAL tile bounds: X [13 to 37] (width: 25), Y [9 to 26] (height: 18)
+[2m2025-10-18T04:31:35.419043Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📏 Expected grid size: 25x18
+[2m2025-10-18T04:31:35.419609Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📊 Tile types found: {"Water": 108, "Rock": 5, "Dirt": 450, "Tree": 33, "YellowGrass": 31, "Grass": 322}
+[2m2025-10-18T04:31:35.419683Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 🎯 Created collision map: 25x18 at origin (-800.0, -576.0)
+[2m2025-10-18T04:31:35.421036Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m Processed 949 tiles into 450 unique grid positions
+[2m2025-10-18T04:31:35.421343Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📊 Final collision map tiles: {"Rock": 5, "Grass": 206, "Dirt": 78, "Tree": 33, "Water": 108, "YellowGrass": 20}
+[2m2025-10-18T04:31:35.421423Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 🏖️  Created 63 shore tiles from water edges
+[2m2025-10-18T04:31:35.421445Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m Collision map built! Walkable: 367, Unwalkable: 83
+[2m2025-10-18T04:31:35.436682Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📝 Collision map dumped to collision_map_debug.txt
+[2m2025-10-18T04:31:36.305410Z[0m [32m INFO[0m [2mchapter2::player::systems[0m[2m:[0m 🎮 Player spawned at walkable position: (0.0, 32.0)
+[2m2025-10-18T04:31:37.581059Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:38.580884Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:39.583468Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:41.188446Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:42.589209Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 949 tiles, Z range: 0.556 to 5.444
+[2m2025-10-18T04:31:42.589559Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:31:42.589671Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.589737Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.589783Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.589822Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.589914Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.589952Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.589981Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.590008Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.590130Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.590170Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:42.683256Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:43.815137Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:45.124680Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:46.359018Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:47.422418Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:48.732835Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 949 tiles, Z range: 0.556 to 5.444
+[2m2025-10-18T04:31:48.732893Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:31:48.732905Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732916Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732924Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732931Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732939Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732946Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732953Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732960Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732967Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.732973Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:48.785687Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:49.963881Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:51.409884Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:52.684683Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:53.842300Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:54.989837Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 949 tiles, Z range: 0.556 to 5.444
+[2m2025-10-18T04:31:54.989928Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:31:54.989966Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.989983Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.989996Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.990009Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.990021Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.990032Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.990105Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.990162Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.990180Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:54.990193Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:31:55.042000Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:56.285186Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:57.640680Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:31:59.489015Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:00.949250Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:02.602423Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 949 tiles, Z range: 0.556 to 5.444
+[2m2025-10-18T04:32:02.602468Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:32:02.602479Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602489Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602497Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602505Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602513Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602522Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602529Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602537Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602544Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.602551Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:02.655427Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:04.007711Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:05.141960Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 0.473, New Z: 0.473, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:05.222904Z[0m [32m INFO[0m [2mbevy_window::system[0m[2m:[0m No windows are open, exiting
+[2m2025-10-18T04:32:05.228167Z[0m [32m INFO[0m [2mbevy_winit::system[0m[2m:[0m Closing window 0v0
+[2m2025-10-18T04:32:05.230830Z[0m [33m WARN[0m [2mbevy_winit::state[0m[2m:[0m Skipped event Destroyed for unknown winit Window Id WindowId(5001892624)

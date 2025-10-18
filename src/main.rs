@@ -9,6 +9,7 @@ use bevy::{
     render::render_resource::AsBindGroup,
     shader::ShaderRef,
     sprite_render::{AlphaMode2d, Material2d, Material2dPlugin},
+    camera::Projection,
 };
 use bevy_procedural_tilemaps::prelude::*;
 
@@ -74,7 +75,7 @@ fn main() {
         ))
         .init_resource::<CollisionMapBuilt>()
         .add_systems(Startup, (setup_camera, setup_generator, setup_fog_of_war))
-        .add_systems(Update, (build_collision_map, follow_player_and_fog));
+        .add_systems(Update, (build_collision_map, follow_player_and_fog, update_player_depth, configure_camera_projection, debug_tile_depths));
 
     // Debug systems - only in debug builds
     #[cfg(debug_assertions)]
@@ -95,6 +96,100 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn((Camera2d::default(), CameraFollow));
 }
 
+/// System to update player depth based on Y position to match tilemap Z system
+/// This mirrors the same Z-depth calculation that bevy_procedural_tilemaps uses
+/// with with_z_offset_from_y(true)
+fn update_player_depth(mut player_query: Query<&mut Transform, With<crate::player::Player>>) {
+    for mut transform in player_query.iter_mut() {
+        let player_y_world = transform.translation.y;
+        let old_z = transform.translation.z;
+        
+        // Map configuration (from generate.rs)
+        const TILE_SIZE: f32 = 64.0;
+        const GRID_Y: u32 = 18;
+        
+        // Based on debug output: tiles have Z range 0.556 to 5.444
+        // Let's use a similar range for the player
+        let map_height = TILE_SIZE * GRID_Y as f32;
+        let map_y0 = -TILE_SIZE * GRID_Y as f32 / 2.0; // Map origin Y (from generate.rs)
+        
+        // Normalize player Y to [0, 1] across the whole grid height
+        let t = ((player_y_world - map_y0) / map_height).clamp(0.0, 1.0);
+        
+        // Use a Z range similar to tiles (0.556 to 5.444) but slightly higher to draw in front
+        let min_z = 0.556;
+        let max_z = 5.444;
+        let player_z = min_z + (max_z - min_z) * (1.0 - t) + 0.1; // +0.1 to draw above tiles
+        
+        transform.translation.z = player_z;
+        
+        // Debug log every 60 frames (about once per second at 60fps)
+        static mut FRAME_COUNT: u32 = 0;
+        unsafe {
+            FRAME_COUNT += 1;
+            if FRAME_COUNT % 60 == 0 {
+                info!("🎮 Player depth debug - Y: {:.1}, Old Z: {:.3}, New Z: {:.3}, t: {:.3}, map_y0: {:.1}, map_height: {:.1}", 
+                      player_y_world, old_z, player_z, t, map_y0, map_height);
+            }
+        }
+    }
+}
+
+/// System to configure camera projection to prevent Z-depth culling issues
+fn configure_camera_projection(
+    mut camera_query: Query<&mut Projection, (With<Camera2d>, With<CameraFollow>)>,
+) {
+    for mut projection in camera_query.iter_mut() {
+        if let Projection::Orthographic(ref mut ortho) = *projection {
+            // Widen the camera's clip range to prevent objects from being culled
+            // This makes debugging less brittle and prevents Z-depth issues
+            ortho.near = -2000.0;
+            ortho.far = 2000.0;
+        }
+    }
+}
+
+/// Debug system to show tile Z values to understand the depth system
+fn debug_tile_depths(
+    tile_query: Query<(&Transform, &crate::collision::TileMarker)>,
+) {
+    // Debug log every 300 frames (about once per 5 seconds at 60fps)
+    static mut FRAME_COUNT: u32 = 0;
+    unsafe {
+        FRAME_COUNT += 1;
+        if FRAME_COUNT % 300 == 0 {
+            let mut tile_count = 0;
+            let mut min_z = f32::MAX;
+            let mut max_z = f32::MIN;
+            let mut sample_tiles: Vec<(f32, f32, String)> = Vec::new(); // (Y, Z, Type)
+            
+            for (transform, tile_marker) in tile_query.iter() {
+                tile_count += 1;
+                let z = transform.translation.z;
+                min_z = min_z.min(z);
+                max_z = max_z.max(z);
+                
+                // Collect first 10 tiles as samples
+                if sample_tiles.len() < 10 {
+                    sample_tiles.push((
+                        transform.translation.y,
+                        z,
+                        format!("{:?}", tile_marker.tile_type)
+                    ));
+                }
+            }
+            
+            if tile_count > 0 {
+                info!("🗺️ Tile depth debug - {} tiles, Z range: {:.3} to {:.3}", 
+                      tile_count, min_z, max_z);
+                info!("🗺️ Sample tiles (Y, Z, Type):");
+                for (y, z, tile_type) in sample_tiles {
+                    info!("   Y: {:.1}, Z: {:.3}, Type: {}", y, z, tile_type);
+                }
+            }
+        }
+    }
+}
 
 fn setup_fog_of_war(
     mut commands: Commands,

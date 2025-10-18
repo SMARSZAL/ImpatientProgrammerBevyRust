@@ -1,0 +1,121 @@
+   Compiling chapter2 v0.1.0 (/Users/febinjohnjames/AIBodh/bevy_book_game)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.21s
+     Running `target/debug/chapter2`
+[2m2025-10-18T04:32:21.183410Z[0m [32m INFO[0m [2mbevy_diagnostic::system_information_diagnostics_plugin::internal[0m[2m:[0m SystemInfo { os: "macOS 15.5 Sequoia", kernel: "24.5.0", cpu: "Apple M3", core_count: "8", memory: "24.0 GiB" }
+[2m2025-10-18T04:32:21.272044Z[0m [32m INFO[0m [2mbevy_render::renderer[0m[2m:[0m AdapterInfo { name: "Apple M3", vendor: 0, device: 0, device_type: IntegratedGpu, driver: "", driver_info: "", backend: Metal }
+[2m2025-10-18T04:32:21.641457Z[0m [32m INFO[0m [2mbevy_render::batching::gpu_preprocessing[0m[2m:[0m GPU preprocessing is fully supported on this device.
+[2m2025-10-18T04:32:21.689501Z[0m [32m INFO[0m [2mbevy_winit::system[0m[2m:[0m Creating new window Bevy Game (0v0)
+[2m2025-10-18T04:32:21.689669Z[0m [33m WARN[0m [2mbevy_winit::winit_windows[0m[2m:[0m Can't select current monitor on window creation or cannot find current monitor!
+[2m2025-10-18T04:32:23.558577Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m Building collision map from 966 tiles...
+[2m2025-10-18T04:32:23.558743Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 🗺️  ACTUAL tile bounds: X [13 to 37] (width: 25), Y [9 to 26] (height: 18)
+[2m2025-10-18T04:32:23.558819Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📏 Expected grid size: 25x18
+[2m2025-10-18T04:32:23.559265Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📊 Tile types found: {"Dirt": 450, "Water": 191, "Grass": 279, "Tree": 19, "YellowGrass": 16, "Rock": 11}
+[2m2025-10-18T04:32:23.559323Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 🎯 Created collision map: 25x18 at origin (-800.0, -576.0)
+[2m2025-10-18T04:32:23.560317Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m Processed 966 tiles into 450 unique grid positions
+[2m2025-10-18T04:32:23.560542Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📊 Final collision map tiles: {"YellowGrass": 5, "Grass": 130, "Dirt": 94, "Water": 191, "Rock": 11, "Tree": 19}
+[2m2025-10-18T04:32:23.560623Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 🏖️  Created 108 shore tiles from water edges
+[2m2025-10-18T04:32:23.560641Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m Collision map built! Walkable: 337, Unwalkable: 113
+[2m2025-10-18T04:32:23.571592Z[0m [32m INFO[0m [2mchapter2::map::generate[0m[2m:[0m 📝 Collision map dumped to collision_map_debug.txt
+[2m2025-10-18T04:32:24.407003Z[0m [32m INFO[0m [2mchapter2::player::systems[0m[2m:[0m 🎮 Player spawned at walkable position: (0.0, 32.0)
+[2m2025-10-18T04:32:25.714790Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 2.964, New Z: 2.964, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:26.714547Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 32.0, Old Z: 2.964, New Z: 2.964, t: 0.528, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:27.715722Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 27.4, Old Z: 2.964, New Z: 2.984, t: 0.524, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:28.714852Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -10.0, Old Z: 3.142, New Z: 3.142, t: 0.491, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:29.664865Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 966 tiles, Z range: 0.556 to 5.500
+[2m2025-10-18T04:32:29.664930Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:32:29.664944Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.664957Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.664966Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.664999Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.665007Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.665015Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.665022Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.665029Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.665036Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.665042Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:29.714887Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -10.0, Old Z: 3.142, New Z: 3.142, t: 0.491, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:30.714503Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -103.2, Old Z: 3.538, New Z: 3.538, t: 0.410, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:31.715709Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -103.2, Old Z: 3.538, New Z: 3.538, t: 0.410, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:32.714045Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -103.2, Old Z: 3.538, New Z: 3.538, t: 0.410, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:33.715341Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -28.4, Old Z: 3.221, New Z: 3.221, t: 0.475, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:34.664376Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 966 tiles, Z range: 0.556 to 5.500
+[2m2025-10-18T04:32:34.664442Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:32:34.664452Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664461Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664470Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664477Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664485Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664492Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664499Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664505Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664512Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.664519Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:34.714138Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -14.7, Old Z: 3.182, New Z: 3.162, t: 0.487, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:35.715373Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 4.2, Old Z: 3.062, New Z: 3.082, t: 0.504, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:36.714263Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -33.0, Old Z: 3.260, New Z: 3.240, t: 0.471, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:37.714085Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 186.3, Old Z: 2.309, New Z: 2.309, t: 0.662, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:38.714268Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -28.3, Old Z: 3.201, New Z: 3.220, t: 0.475, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:39.665571Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 966 tiles, Z range: 0.556 to 5.500
+[2m2025-10-18T04:32:39.665651Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:32:39.665663Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665673Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665681Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665689Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665696Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665703Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665710Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665717Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665724Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.665731Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:39.715496Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 8.8, Old Z: 3.083, New Z: 3.063, t: 0.508, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:40.747549Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 228.8, Old Z: 2.129, New Z: 2.129, t: 0.699, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:41.747659Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: 34.1, Old Z: 2.936, New Z: 2.955, t: 0.530, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:42.748035Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -68.6, Old Z: 3.391, New Z: 3.391, t: 0.440, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:43.749163Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -103.0, Old Z: 3.537, New Z: 3.537, t: 0.411, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:44.697585Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 966 tiles, Z range: 0.556 to 5.500
+[2m2025-10-18T04:32:44.697654Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:32:44.697665Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697676Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697684Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697692Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697699Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697706Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697713Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697720Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697727Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.697733Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:44.748851Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -229.0, Old Z: 4.072, New Z: 4.072, t: 0.301, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:45.747785Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -229.0, Old Z: 4.072, New Z: 4.072, t: 0.301, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:46.747475Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -229.0, Old Z: 4.072, New Z: 4.072, t: 0.301, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:47.748525Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:48.749737Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:49.950044Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 966 tiles, Z range: 0.556 to 5.500
+[2m2025-10-18T04:32:49.950128Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:32:49.950146Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950162Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950176Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950188Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950200Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950262Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950310Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950326Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950339Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:49.950352Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:50.028521Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:51.163835Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:52.226696Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:53.292056Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:54.358111Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
+[2m2025-10-18T04:32:55.376340Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Tile depth debug - 966 tiles, Z range: 0.556 to 5.500
+[2m2025-10-18T04:32:55.376409Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🗺️ Sample tiles (Y, Z, Type):
+[2m2025-10-18T04:32:55.376422Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376433Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376443Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376452Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376460Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376468Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376477Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376485Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376494Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.376502Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m    Y: 32.0, Z: 1.500, Type: Dirt
+[2m2025-10-18T04:32:55.428661Z[0m [32m INFO[0m [2mchapter2[0m[2m:[0m 🎮 Player depth debug - Y: -130.5, Old Z: 3.654, New Z: 3.654, t: 0.387, map_y0: -576.0, map_height: 1152.0
