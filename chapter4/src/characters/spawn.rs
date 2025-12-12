@@ -1,7 +1,10 @@
 use bevy::prelude::*;
 use crate::characters::animation::*;
 use crate::characters::config::{CharacterEntry, CharactersList};
-use crate::characters::movement::Player;
+use crate::characters::input::Player;  // Changed from movement::Player
+use crate::characters::state::CharacterState;  // Line update alert
+use crate::characters::physics::Velocity;  // Line update alert
+use crate::characters::facing::Facing;  // Line update alert
 
 const PLAYER_SCALE: f32 = 0.8;
 const PLAYER_Z_POSITION: f32 = 20.0;
@@ -93,7 +96,9 @@ pub fn initialize_player_character(
         
         commands.entity(entity).insert((
             AnimationController::default(),
-            AnimationState::default(),
+            CharacterState::default(),   // Line update alert
+            Velocity::default(),         // Line update alert  
+            Facing::default(),           // Line update alert
             AnimationTimer(Timer::from_seconds(DEFAULT_ANIMATION_FRAME_TIME, TimerMode::Repeating)),
             character_entry.clone(),
             sprite,
