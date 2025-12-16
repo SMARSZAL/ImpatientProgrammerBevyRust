@@ -26,12 +26,18 @@ Learn to build a data-driven character system in Bevy. We'll use a RON file to c
 
 ![Chapter 3 Demo](assets/book_assets/chapter3/chapter3.gif)
 
+### [Chapter 4: Let There Be Collisions](https://aibodh.com/posts/bevy-rust-game-development-chapter-4/)
+
+Let's make the player interact with the world properly, no more walking through trees, water, or rocks. We'll implement z-ordering so they can walk behind objects, giving your 2D game true depth. Also, you'll build a collision visualizer for debugging.
+
+![Chapter 4 Demo](assets/book_assets/chapter4/chapter4.gif)
+
 ## Getting Started
 
 Each chapter has its own directory with a complete, runnable project. Navigate to the chapter directory you want to explore and run:
 
 ```bash
-cd chapter1  # or chapter2, chapter3
+cd chapter1  # or chapter2, chapter3, chapter4
 cargo run
 ```
 
