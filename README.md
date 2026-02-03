@@ -44,6 +44,12 @@ Learn to build a particle system with magical powers and create stunning particl
 
 ![Chapter 6 Demo](assets/book_assets/chapter6/ch6.gif)
 
+### [Chapter 7: Let There Be Enemies](https://aibodh.com/posts/bevy-rust-game-development-chapter-7/)
+
+Build intelligent enemies that hunt and attack the player.
+
+![Chapter 7 Demo](assets/book_assets/chapter7/ch7.gif)
+
 ## Getting Started
 
 Each chapter has its own directory with a complete, runnable project. Navigate to the chapter directory you want to explore and run:
