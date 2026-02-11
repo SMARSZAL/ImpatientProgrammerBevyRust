@@ -9,6 +9,7 @@ use crate::characters::collider::Collider;
 use crate::config::player::{PLAYER_SCALE, PLAYER_Z_POSITION}; 
 use crate::combat::PlayerCombat;
 use crate::collision::CollisionMap;
+use crate::combat::Health;
 
 #[derive(Resource, Default)]
 pub struct CurrentCharacterIndex {
@@ -206,6 +207,7 @@ pub fn spawn_player_at_valid_position(
         Facing::default(),
         Collider::default(),
         PlayerCombat::default(),
+        Health::new(character_entry.max_health),
         AnimationTimer(Timer::from_seconds(
             DEFAULT_ANIMATION_FRAME_TIME,
             TimerMode::Repeating,

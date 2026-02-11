@@ -12,6 +12,7 @@ use crate::characters::{
 use crate::collision::CollisionMap;
 use crate::config::enemy::{ENEMY_SCALE, ENEMY_Z_POSITION};
 use bevy::prelude::*;
+use crate::combat::Health;
 
 /// Spawn an enemy at the given position
 pub fn spawn_enemy(
@@ -57,6 +58,7 @@ pub fn spawn_enemy(
             Facing::default(),
             Collider::default(),
             EnemyCombat::default(),
+            Health::new(character_entry.max_health), 
             AIBehavior::default(),
             EnemyPath::default(),  // Add this line
             AnimationTimer(Timer::from_seconds(

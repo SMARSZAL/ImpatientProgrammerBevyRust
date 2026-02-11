@@ -5,11 +5,29 @@ use crate::characters::facing::Facing;
 use crate::characters::input::Player;
 use crate::particles::components::ParticleEmitter;
 use bevy::prelude::*;
+use crate::enemy::Enemy;
 
 /// Marker for projectile effects
 #[derive(Component)]
 pub struct ProjectileEffect {
     pub power_type: PowerType,
+}
+
+/// Who fired a projectile determines which entities it can hit.
+#[derive(Component, Clone, Copy)]
+pub enum ProjectileOwner {
+    Player,
+    Enemy,
+}
+
+/// Invisible hitbox that travels and checks for collisions.
+#[derive(Component)]
+pub struct Projectile {
+    pub velocity: Vec3,
+    pub lifetime: f32,
+    pub power_type: PowerType,
+    pub owner: ProjectileOwner,
+    pub radius: f32,
 }
 
 pub fn handle_power_input(
@@ -45,7 +63,7 @@ pub fn handle_power_input(
     // Get visuals from power type
     let visuals = combat.power_type.visuals(direction);
 
-    spawn_projectile(&mut commands, spawn_position, combat.power_type, &visuals);
+    spawn_projectile(&mut commands, spawn_position, combat.power_type, &visuals, ProjectileOwner::Player);
 
     info!("{:?} projectile fired!", combat.power_type);
 }
@@ -57,6 +75,7 @@ pub fn spawn_projectile(
     position: Vec3,
     power_type: PowerType,
     visuals: &PowerVisuals,
+    owner: ProjectileOwner, 
 ) {
     // Primary particles
     let primary_emitter =
@@ -83,6 +102,20 @@ pub fn spawn_projectile(
             ProjectileEffect { power_type },
         ));
     }
+
+    // Hitbox: invisible entity that moves and checks for hits
+    let direction = visuals.primary.direction.normalize_or_zero();
+    let speed = visuals.primary.speed;
+    commands.spawn((
+        Projectile {
+            velocity: direction * speed,
+            lifetime: 2.0,
+            power_type,
+            owner,
+            radius: power_type.hitbox_radius(),
+        },
+        Transform::from_translation(position),
+    ));
 }
 
 fn facing_to_vec3(facing: &Facing) -> Vec3 {
@@ -117,5 +150,55 @@ pub fn debug_switch_power(
     if let Some(power) = new_power {
         combat.power_type = power;
         info!("Switched to {:?}", power);
+    }
+}
+
+/// Moves projectile hitboxes forward and despawns them on timeout.
+pub fn move_projectiles(
+    mut commands: Commands,
+    time: Res<Time>,
+    mut projectiles: Query<(Entity, &mut Projectile, &mut Transform)>,
+) {
+    let dt = time.delta_secs();
+    for (entity, mut proj, mut transform) in projectiles.iter_mut() {
+        proj.lifetime -= dt;
+        if proj.lifetime <= 0.0 {
+            commands.entity(entity).despawn();
+            continue;
+        }
+        transform.translation += proj.velocity * dt;
+    }
+}
+
+/// Checks each projectile hitbox against its valid targets; triggers hit events on collision.
+pub fn check_projectile_hits(
+    mut commands: Commands,
+    projectiles: Query<(Entity, &Projectile, &Transform)>,
+    players: Query<(Entity, &GlobalTransform), With<Player>>,
+    enemies: Query<(Entity, &GlobalTransform), With<Enemy>>,
+) {
+    for (proj_entity, proj, proj_transform) in &projectiles {
+        let proj_pos = proj_transform.translation;
+
+        let hit_target = match proj.owner {
+            ProjectileOwner::Player => enemies
+                .iter()
+                .find(|(_, t)| proj_pos.distance(t.translation()) <= proj.radius)
+                .map(|(e, _)| e),
+            ProjectileOwner::Enemy => players
+                .iter()
+                .find(|(_, t)| proj_pos.distance(t.translation()) <= proj.radius)
+                .map(|(e, _)| e),
+        };
+
+        if let Some(target) = hit_target {
+            // Trigger hit event instead of directly applying damage
+            commands.trigger(super::events::ProjectileHit {
+                target,
+                damage: proj.power_type.damage(),
+                power_type: proj.power_type,
+            });
+            commands.entity(proj_entity).despawn();
+        }
     }
 }
