@@ -31,6 +31,15 @@ pub mod map {
     /// Grid dimensions
     pub const GRID_X: u32 = 25;
     pub const GRID_Y: u32 = 18;
+
+    /// Number of chunks in each direction
+    /// We're going big: 10x10 = 100 chunks!
+    pub const CHUNKS_X: u32 = 10;
+    pub const CHUNKS_Y: u32 = 10;
+
+    /// Total unique grid dimensions (chunks overlap by 1 tile at borders)
+    pub const TOTAL_GRID_X: u32 = CHUNKS_X * GRID_X - (CHUNKS_X - 1);
+    pub const TOTAL_GRID_Y: u32 = CHUNKS_Y * GRID_Y - (CHUNKS_Y - 1);
     
     /// Z-height of each layer (used for Y-based depth sorting)
     pub const NODE_SIZE_Z: f32 = 1.0; // Add this line

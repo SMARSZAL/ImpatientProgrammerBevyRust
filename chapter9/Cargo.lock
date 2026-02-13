@@ -1147,9 +1147,9 @@ dependencies = [
 
 [[package]]
 name = "bevy_procedural_tilemaps"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12c9c47b21d19cd7488aab8600fb49c4d9280067906b453c0afcb0f82f56e138"
+checksum = "533538925669fd15d353b472e258c16f4da2fc09d4916a142e959aafc9fd6a15"
 dependencies = [
  "bevy",
  "procedural_tilemaps_core",
@@ -3875,9 +3875,9 @@ dependencies = [
 
 [[package]]
 name = "procedural_tilemaps_core"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "02181e060762da15f93e0f02f6929d3dc995c1758d095d6ef0f498145ec71d6f"
+checksum = "f432349ab31816866faa4a19820d235ed5ea0f3dd51de7f1bef10614a675b699"
 dependencies = [
  "bevy",
  "bitvec",
